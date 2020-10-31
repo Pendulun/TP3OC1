@@ -1,5 +1,7 @@
 #ifndef CPU_H
 #define CPU_H
+#define ARQFINAL result.txt
+#define ARQTEMP resultTemp.txt
 #include <string>
 //#include "MemCache.hpp"
 namespace Computador{

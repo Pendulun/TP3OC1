@@ -8,8 +8,9 @@ int main(int argc, char *argv[]){
 		std::string arq_entrada = argv[1];
 		std::fstream fs;
 		fs.open(arqEntrada, std::fstream::in);
+
 		if(fs.is_open()){
-			CPU* cpu = new CPU();
+			Computador::CPU* cpu = new Computador::CPU();
 	  		while(!fs.eof()){
 	  			unsigned int posicao;
 	  			bool tipoInstrucao;
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]){
 	  		cpu->escreverArqFinal();
 	  		delete cpu;
 	  		fs.close();
+
  		 }else{
     		std::cout<< "Erro ao abrir o arquivo - confira o local e nome do arquivo"<<std::endl;
     		fs.close();

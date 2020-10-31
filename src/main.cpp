@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "CPU.hpp"
    
 int main(int argc, char *argv[]){
 	if(argc>1){
@@ -8,9 +9,22 @@ int main(int argc, char *argv[]){
 		std::fstream fs;
 		fs.open(arqEntrada, std::fstream::in);
 		if(fs.is_open()){
+			CPU* cpu = new CPU();
 	  		while(!fs.eof()){
-	  			//Lê uma linha por vez até o final
+	  			unsigned int posicao;
+	  			bool tipoInstrucao;
+	  			fs>>posicao;
+	  			fs>>tipoInstrucao;
+	  			if(tipoInstrucao){
+	  				std::string dado;
+	  				fs>>dado;
+	  				cpu->executarInstrucao(posicao,tipo,dado);
+	  			}else{
+	  				cpu->executarInstrucao(posicao,tipo,"");
+	  			}
 	  		}
+	  		cpu->escreverArqFinal();
+	  		delete cpu;
 	  		fs.close();
  		 }else{
     		std::cout<< "Erro ao abrir o arquivo - confira o local e nome do arquivo"<<std::endl;

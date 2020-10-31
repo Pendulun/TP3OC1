@@ -2,8 +2,19 @@
 
 namespace Computador{
 
+	CPU::CPU(){
+		this->leituras=0;
+		this->escritas=0;
+		this->misses=0;
+		this->hits=0;
+	}
+
+	CPU::~CPU(){
+		//deleta a memória cache
+	}
+
 	//Recebe uma instrução a ser executada
-	void CPU::executarInstrucao(){
+	void CPU::executarInstrucao(unsigned int posicao, unsigned int tipo, std::string){
 
 	}
 

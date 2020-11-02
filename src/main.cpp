@@ -19,15 +19,14 @@ int main(int argc, char *argv[]){
 	  			if(tipoInstrucao){
 	  				std::string dado;
 	  				fs>>dado;
-	  				cpu->executarInstrucao(posicao,tipo,dado);
+	  				cpu->escreverCache(posicao,dado);
 	  			}else{
-	  				cpu->executarInstrucao(posicao,tipo,"");
+	  				cpu->lerCache(posicao);
 	  			}
 	  		}
 	  		cpu->escreverArqFinal();
 	  		delete cpu;
 	  		fs.close();
-
  		 }else{
     		std::cout<< "Erro ao abrir o arquivo - confira o local e nome do arquivo"<<std::endl;
     		fs.close();

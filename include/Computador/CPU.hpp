@@ -7,12 +7,11 @@
 namespace Computador{
 	class CPU{
 	public:
-		void executarInstrucao(unsigned int posicao, unsigned int tipo, std::string);
+		void lerCache(unsigned int posicao);
+		void escreverCache(unsigned int posicao, std::string dado);
 		~CPU();
 		CPU();
 	private:
-		void lerCache();
-		void escreverCache();
 		void escreverArqTemp();
 		void escreverArqFinal();
 		//MemCache* memCache;

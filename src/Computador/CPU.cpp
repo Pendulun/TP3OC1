@@ -13,18 +13,13 @@ namespace Computador{
 		//deleta a memória cache
 	}
 
-	//Recebe uma instrução a ser executada
-	void CPU::executarInstrucao(unsigned int posicao, unsigned int tipo, std::string){
-
-	}
-
 	//Operação de leitura da Cache
-	void CPU::lerCache(){
+	void CPU::lerCache(unsigned int posicao){
 
 	}
 
 	//Operação de escrita na cache
-	void CPU::escreverCache(){
+	void CPU::escreverCache(unsigned int posicao, std::string dado){
 
 	}
 

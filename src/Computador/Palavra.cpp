@@ -10,7 +10,7 @@ namespace Computador{
 		return this->palavra;
 	}
 
-	void Palavra::getPalavra(std::string palavra){
+	void Palavra::setPalavra(std::string palavra){
 		this->palavra = palavra;
 	}
 

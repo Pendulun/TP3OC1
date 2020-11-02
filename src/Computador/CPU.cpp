@@ -7,6 +7,7 @@ namespace Computador{
 		this->escritas=0;
 		this->misses=0;
 		this->hits=0;
+		this->flag = true;
 		//this->memCache = new Computador::MemCache();
 	}
 
@@ -20,15 +21,25 @@ namespace Computador{
 		this->leituras++;
 		bool hit=false;
 		//Se deu hit
+		/*
 		if(this->memCache->buscarMemDados(posicao)){
 			this->hit++;
 			hit = true;
 		}else{
 			this->misses++;
 		}
+		*/
+		if(this->flag){
+			this->hits++;
+			hit=true;
+			this->flag=false;
+		}else{
+			this->misses++;
+		}
+		
 		//Escreve no arqTemp
 		//posicao 0 hit ? H : M
-		std::string linha = posicao;
+		std::string linha = std::to_string(posicao);
 		linha.append(" 0 ");
 		if(hit){
 			linha.append("H");
@@ -41,10 +52,11 @@ namespace Computador{
 	//Operação de escrita na cache
 	void CPU::escreverCache(unsigned int posicao, std::string dado){
 		this->escritas++;
-		this->memCache->salvarMemDados(posicao,dado);
+		//this->memCache->salvarMemDados(posicao,dado);
+
 		//Escreve no arqTemp
 		//posicao 1 dado W
-		std::string linha = posicao;
+		std::string linha = std::to_string(posicao);
 		linha.append(" 1 ");
 		linha.append(dado);
 		linha.append(" W");
@@ -54,35 +66,47 @@ namespace Computador{
 	//Escreve o arquivo temporário
 	void CPU::escreverArqTemp(std::string linha){
 		std::fstream saida;
-		saida.open("../../output/resultTemp.txt", std::ofstream::app);
-		saida<<linha<<std::endl;
-		saida.close();
+		saida.open("resultTemp.txt", std::ofstream::app);
+		if(saida.is_open()){
+			saida<<linha<<std::endl;
+			saida.close();
+		}else{
+			std::cout<<"Não deu pra abrir o arqTemp"<<std::endl;
+		}
+		
 	}
 
 	//Escreve o arquivo final de saída
-	void escreverArqFinal(){
+	void CPU::escreverArqFinal(){
 		std::fstream saida, arqTemp;
-		saida.open("../../output/result.txt", std::ofstream::out);
+		saida.open("result.txt", std::ofstream::out);
+		double hitRate = (int)this->hits/(int)this->leituras;
+		double missRate = (int)this->misses/(int)this->leituras;
+		if(saida.is_open()){
+			saida<<"READS: "<<std::to_string(this->leituras)<<std::endl;
+			saida<<"WRITES: "<<std::to_string(this->escritas)<<std::endl;
+			saida<<"HITS: "<<std::to_string(this->hits)<<std::endl;
+			saida<<"MISSES: "<<std::to_string(this->misses)<<std::endl;
+			saida<<"HIT RATE: "<<std::to_string(hitRate)<<std::endl;
+			saida<<"MISS RATE: "<<std::to_string(missRate)<<std::endl;
+			saida<<std::endl;
 
-		saida<<"READS: "<<this->leituras<<std::endl;
-		saida<<"WRITES: "<<this->escritas<<std::endl;
-		saida<<"HITS: "<<this->hits<<std::endl;
-		saida<<"MISSES: "<<this->misses<<std::endl;
+			arqTemp.open("resultTemp.txt", std::ofstream::in);
+			if(arqTemp.is_open()){
+				std::string linha;
+				while (std::getline(arqTemp, linha)) {
+				saida<<linha<<std::endl;
+				}
 
-		float hitRate = this->hits/this->leituras;
-		float missRate = this->misses/this->leituras;
-		saida<<"HIT RATE: "<<hitRate<<std::endl;
-		saida<<"MISS RATE: "<<missRate<<std::endl;
-		saida<<std::endl;
-
-		arqTemp.open("../../output/resultTemp.txt", std::ofstream::in);
-		while(!arqTemp.eof()){
-			std::string linha;
-			arqTemp>>linha;
-			saida<<linha<<std::endl;
+				arqTemp.close();
+			}else{
+				std::cout<<"Não deu pra abrir o arqTemp"<<std::endl;
+			}
+			
+			saida.close();
+		}else{
+			std::cout<<"Não deu pra abrir o arqFinal"<<std::endl;
 		}
 		
-		arqTemp.close();
-		saida.close();
 	}
 }

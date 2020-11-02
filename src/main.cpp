@@ -5,7 +5,7 @@
    
 int main(int argc, char *argv[]){
 	if(argc>1){
-		std::string arq_entrada = argv[1];
+		std::string arqEntrada = argv[1];
 		std::fstream fs;
 		fs.open(arqEntrada, std::fstream::in);
 

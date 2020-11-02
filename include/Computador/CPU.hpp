@@ -2,6 +2,7 @@
 #define CPU_H
 #include <string>
 #include <fstream> 
+#include <iostream>
 //#include "MemCache.hpp"
 namespace Computador{
 	class CPU{
@@ -18,6 +19,7 @@ namespace Computador{
 		unsigned int escritas;
 		unsigned int misses;
 		unsigned int hits;	
+		bool flag;
 	};
 }
 

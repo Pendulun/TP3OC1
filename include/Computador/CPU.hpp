@@ -3,7 +3,8 @@
 #include <string>
 #include <fstream> 
 #include <iostream>
-//#include "MemCache.hpp"
+#include "MemCache.hpp"
+
 namespace Computador{
 	class CPU{
 	public:
@@ -14,7 +15,7 @@ namespace Computador{
 		CPU();
 	private:
 		void escreverArqTemp(std::string linha);
-		//Computador::MemCache* memCache;
+		Computador::MemCache* memCache;
 		unsigned int leituras;
 		unsigned int escritas;
 		unsigned int misses;

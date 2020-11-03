@@ -8,12 +8,12 @@ namespace Computador{
 		this->misses=0;
 		this->hits=0;
 		this->flag = true;
-		//this->memCache = new Computador::MemCache();
+		this->memCache = new Computador::MemCache();
 	}
 
 	CPU::~CPU(){
 		//deleta a memória cache
-		//delete this->memCache;
+		delete this->memCache;
 	}
 
 	//Operação de leitura da Cache

@@ -5,21 +5,22 @@ BUILD=./build/
 SRC=./src/
 INCLUDE=./include/
 COMP=Computador/
+# Expansoes de variaveis
+OBJETOS:=$(patsubst $(SRC)%cpp, $(BUILD)%o, $(wildcard $(SRC)$(COMP)*.cpp))
+OBJ_COMPIL_COMMAND=$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $< -o $@
 
-$(EXEC):	$(BUILD)main.o $(BUILD)$(COMP)CPU.o 
+$(EXEC):	$(BUILD)main.o
 	$(CC) $(CFLAGS) -o $(EXEC) $(BUILD)main.o $(BUILD)$(COMP)*.o 
 
-$(BUILD)main.o:	$(SRC)main.cpp $(BUILD)$(COMP)CPU.o  
+$(BUILD)main.o:	$(SRC)main.cpp $(OBJETOS)
 	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $(SRC)main.cpp -o $(BUILD)main.o
 
-$(BUILD)$(COMP)CPU.o: $(SRC)$(COMP)CPU.cpp $(INCLUDE)$(COMP)CPU.hpp #$(BUILD)$(COMP)MemCache.o
-	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $(SRC)$(COMP)CPU.cpp -o $(BUILD)$(COMP)CPU.o
+$(BUILD)%.o :: $(SRC)%.cpp $(INCLUDE)%.hpp
+	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $< -o $@
 
-#$(BUILD)$(COMP)MemCache.o: $(SRC)$(COMP)Diamante.cpp $(INCLUDE)$(JOGODIM)Diamante.hpp 
-#	$(CC) $(CFLAGS) -I $(INCLUDE)$(JOGODIM) -c $(SRC)$(JOGODIM)Diamante.cpp -o $(BUILD)$(JOGODIM)Diamante.o
-
+.PHONY: clean mem
 clean:
-	rm -f $(BUILD)*/*.o
+	rm -f $(BUILD)*/*.o $(BUILD)*.o *.exe
 
 mem:
 	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX1

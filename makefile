@@ -9,14 +9,18 @@ COMP=Computador/
 OBJETOS:=$(patsubst $(SRC)%cpp, $(BUILD)%o, $(wildcard $(SRC)$(COMP)*.cpp))
 OBJ_COMPIL_COMMAND=$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $< -o $@
 
-$(EXEC):	$(BUILD)main.o
+$(EXEC):	$(BUILD)main.o $(BUILD)$(COMP)
 	$(CC) $(CFLAGS) -o $(EXEC) $(BUILD)main.o $(BUILD)$(COMP)*.o 
+
+$(BUILD)$(COMP) ::
+	-mkdir $(BUILD)
+	-mkdir $@
 
 $(BUILD)main.o:	$(SRC)main.cpp $(OBJETOS)
 	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $(SRC)main.cpp -o $(BUILD)main.o
 
 $(BUILD)%.o :: $(SRC)%.cpp $(INCLUDE)%.hpp
-	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $< -o $@
+	$(OBJ_COMPIL_COMMAND)
 
 .PHONY: clean mem
 clean:

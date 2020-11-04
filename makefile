@@ -27,4 +27,4 @@ clean:
 	rm -f $(BUILD)*/*.o $(BUILD)*.o *.exe
 
 mem:
-	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX1
+	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX1.txt

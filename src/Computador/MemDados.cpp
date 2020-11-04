@@ -2,10 +2,10 @@
 // Classe MemDados
 //
 // Descrição:
-// Essa classe implementa a memória de dados, que é so segundo
+// Essa classe implementa a memória de dados, que é o segundo
 //   nível da nossa hierarquia de memória.
 // Tudo que ela é responsável por fazer é ser capaz de antender
-//   a pedidos de escrita e leitura, simplesmente escreverndo e
+//   a pedidos de escrita e leitura, simplesmente escrevendo e
 //   lendo, não é necessário fazer análises mais profundas.
 ////////////////////////////////////////////////////////////////
 
@@ -25,7 +25,7 @@ MemDados::MemDados() {
 		m_dados->at(i)->setTag(i);
 		// Na memdados, tudo deve ter bitvalido = true
 		// Na verdade, nao teria nem esse bit, mas ficou mais facil
-		//   implementar assim.
+		//   implementar assim, para aproveitar a classe ~Bloco~.
 		m_dados->at(i)->setBitValido(true);
 	}
 }

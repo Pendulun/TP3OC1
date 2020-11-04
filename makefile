@@ -6,7 +6,6 @@ BUILD=./build/
 SRC=./src/
 INCLUDE=./include/
 COMP=Computador/
-OUTPUT_DIR=./output
 
 # Expansoes de variaveis
 OBJETOS:=$(patsubst $(SRC)%cpp, $(BUILD)%o, $(wildcard $(SRC)$(COMP)*.cpp))
@@ -16,14 +15,11 @@ OBJ_COMPIL_COMMAND=$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $< -o $@
 $(EXEC):	$(BUILD)main.o
 	$(CC) $(CFLAGS) -o $(EXEC) $(BUILD)main.o $(BUILD)$(COMP)*.o 
 
-$(BUILD)main.o:	$(BUILD)$(COMP) $(OUTPUT_DIR) $(SRC)main.cpp $(OBJETOS)
-	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $(SRC)main.cpp -o $(BUILD)main.o
-
 $(BUILD)$(COMP) ::
 	@-mkdir --parents $@
 
-$(OUTPUT_DIR) ::
-	@-mkdir $@
+$(BUILD)main.o:	$(BUILD)$(COMP) $(SRC)main.cpp $(OBJETOS)
+	$(CC) $(CFLAGS) -I $(INCLUDE)$(COMP) -c $(SRC)main.cpp -o $(BUILD)main.o
 
 $(BUILD)%.o :: $(SRC)%.cpp $(INCLUDE)%.hpp
 	$(OBJ_COMPIL_COMMAND)
@@ -49,4 +45,4 @@ clean ::
 	fi
 
 mem:
-	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX3.txt
+	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX1.txt

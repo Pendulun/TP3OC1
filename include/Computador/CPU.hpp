@@ -15,8 +15,8 @@ namespace Computador{
 		~CPU();
 		CPU();
 	private:
-		static constexpr const char* nomeArqFinal = "result.txt";
-		static constexpr const char* nomeArqTemp  = "resultTemp.txt";
+		static constexpr const char* nomeArqFinal = "./output/result.txt";
+		static constexpr const char* nomeArqTemp  = "./output/resultTemp.txt";
 
 		void escreverArqTemp(std::string linha);
 		Computador::MemCache* memCache;

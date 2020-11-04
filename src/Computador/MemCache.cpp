@@ -21,9 +21,7 @@ namespace Computador {
 // Sem problemas com nullptr
 //:D
 MemCache::MemCache() {
-	std::cerr << "Inicializando dados" << std::endl;
 	m_MD = new MemDados();
-	std::cerr << "Dados inicializado" << std::endl;
 
 	m_blocos = new blocos(ktam_memcache);
 	unsigned int i = 0;
@@ -34,7 +32,6 @@ MemCache::MemCache() {
 
 //:D
 MemCache::~MemCache() {
-	std::cerr << "Deletando memcache" << std::endl;
 	// Limpando m_blocos
 	unsigned int i = 0;
 	for(; i < m_blocos->size(); i++) {
@@ -44,13 +41,8 @@ MemCache::~MemCache() {
 	// Depois deletar
 	delete m_blocos;
 
-	std::cerr << "Deletados os blocos de memcache" << std::endl;
-
 	// Limpando m_MD
 	delete m_MD;
-
-	std::cerr << "Deletada memdados" << std::endl;
-
 }
 
 //:D
@@ -59,18 +51,14 @@ bool MemCache::ler(const unsigned int p_pos) {
 	// Em qual bloco e palavra da cache p_pos deve ficar
 	const unsigned int pos_bloco = m_bloco_em(p_pos);
 	//const unsigned int pos_palavra = m_palavra_em(p_pos);
-	std::cerr << "Lendo na posicao " << pos_bloco << std::endl;
 
 	Bloco* bloco_atual = m_blocos->at(pos_bloco);
 	// VALIDO / SUJO
 	// 1X
 	if (bloco_atual->getBitValido()) {
-		std::cerr << "Bit valido ativado!" << std::endl;
 		// Aqui, usando tag como um id para blocos da MemDados
-		std::cerr << "Tag dele: " << bloco_atual->getTag() << std::endl;
 		if(bloco_atual->getTag() == m_calc_tag(p_pos)) {
 			hit = true;
-			std::cerr << "Hit!" << std::endl;
 		} // That was a hit!
 		else {
 			hit = false;
@@ -101,7 +89,6 @@ void MemCache::escrever(const unsigned int p_pos, std::string p_dado) {
 	// Flag que indica que endereco buscado foi encontrado na
 	//   cache.
 	bool hit = false; // Assumir que deu miss como default
-	std::cerr << "Escrevendo na posicao " << pos_bloco << std::endl;
 	Bloco* bloco_atual = m_blocos->at(pos_bloco);
 
 	// VALIDO / SUJO
@@ -119,15 +106,11 @@ void MemCache::escrever(const unsigned int p_pos, std::string p_dado) {
 	}
 	// 11
 	else { // Writeback
-		std::cerr << "Fazendo writeback" << std::endl;
-		std::cerr << "tag 1 = " << bloco_atual->getTag() << ", tag 2 = " << m_calc_tag(p_pos) << std::endl;
 		if (bloco_atual->getTag() == m_calc_tag(p_pos)) {
-			std::cerr << "Bit sujo mas no problem" << std::endl;
 			hit = true;
 		}
 		else { // A palavra que quero nao esta aqui!!
 			// Atualizar MemDados de acordo com a MemCache
-			std::cerr << "Bit sujo and we have a problem, Houston" << std::endl;
 			m_escrever_MD(bloco_atual); 
 		}
 	}
@@ -135,7 +118,6 @@ void MemCache::escrever(const unsigned int p_pos, std::string p_dado) {
 	// Se nao encontramos os dados pedidos aqui, precisamos
 	//   requisita-los da memoria de dados.
 	if (!hit) {
-		std::cerr << "Miss de escrita, indo buscar na MD" << std::endl;
 		bloco_atual->setBloco(m_ler_MD(p_pos));
 		// E ja resetamos o bit sujo, pois os dados que trouxemos
 		//   estao limpinhos.

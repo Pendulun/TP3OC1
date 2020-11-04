@@ -48,10 +48,7 @@ MemDados::~MemDados() {
 //:D
 Bloco* MemDados::ler(const unsigned int p_pos)
 {
-	std::cerr << "Lendo MD, pos= " << p_pos << std::endl;
 	const unsigned int pos_bloco = (unsigned int) (p_pos / Bloco::ktam_bloco);
-	std::cerr << "MD lida, na posicao " << pos_bloco << std::endl;
-	std::cerr << "Tag: " << m_dados->at(pos_bloco)->getTag() << std::endl;
 	return m_dados->at(pos_bloco);
 }
 

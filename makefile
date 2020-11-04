@@ -45,4 +45,4 @@ clean ::
 	fi
 
 mem:
-	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX1.txt
+	valgrind --leak-check=full --show-leak-kinds=all $(EXEC) ./testcases/EX3.txt

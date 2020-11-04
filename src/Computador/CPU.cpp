@@ -79,15 +79,15 @@ namespace Computador{
 		std::cerr << "Escrevendo arquivo final" << std::endl;
 		std::fstream saida, arqTemp;
 		saida.open(nomeArqFinal, std::ofstream::out);
-		double hitRate = (int)this->hits/(int)this->leituras;
-		double missRate = (int)this->misses/(int)this->leituras;
 		if(saida.is_open()){
-			saida<<"READS: "<<std::to_string(this->leituras)<<std::endl;
-			saida<<"WRITES: "<<std::to_string(this->escritas)<<std::endl;
-			saida<<"HITS: "<<std::to_string(this->hits)<<std::endl;
-			saida<<"MISSES: "<<std::to_string(this->misses)<<std::endl;
-			saida<<"HIT RATE: "<<std::to_string(hitRate)<<std::endl;
-			saida<<"MISS RATE: "<<std::to_string(missRate)<<std::endl;
+			double hitRate = ((double)this->hits)/(this->leituras);
+			double missRate = ((double)this->misses)/this->leituras;
+			saida<<"READS: "<<this->leituras<<std::endl;
+			saida<<"WRITES: "<<this->escritas<<std::endl;
+			saida<<"HITS: "<<this->hits<<std::endl;
+			saida<<"MISSES: "<<this->misses<<std::endl;
+			saida<<"HIT RATE: "<<std::fixed<<std::setprecision(3)<<hitRate<<std::endl;
+			saida<<"MISS RATE: "<<std::fixed<<std::setprecision(3)<<missRate<<std::endl;
 			saida<<std::endl;
 
 			arqTemp.open(nomeArqTemp, std::ofstream::in);
